@@ -29,7 +29,7 @@ list(APPEND libs
 
 #Main program
 add_executable(Program src/Main.cpp)
-set_target_properties(Program PROPERTIES OUTPUT_NAME "Voller Programmname")
+set_target_properties(Program PROPERTIES OUTPUT_NAME "PortalCredits")
 target_link_libraries(Program PRIVATE ${libs})
 
 if (WIN32)
