@@ -34,3 +34,4 @@
 # Internal directories
 bin/
 .vscode/
+doc/internal/
