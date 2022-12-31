@@ -35,3 +35,6 @@
 bin/
 .vscode/
 doc/internal/
+
+# Generated Song
+src/Script/Song.hpp
