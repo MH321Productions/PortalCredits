@@ -7,6 +7,13 @@ include_directories(lib)
 include_directories(include)
 
 #Subdirectories
+set(BUILD_SHARED_LIBS OFF)
+set(SFML_BUILD_EXAMPLES OFF)
+set(SFML_BUILD_GRAPHICS OFF)
+set(SFML_BUILD_WINDOW OFF)
+set(SFML_BUILD_NETWORK OFF)
+add_subdirectory(lib/SFML)
+include_directories(lib/SFML/include)
 
 if (WIN32)
     set(CMAKE_BUILD_TYPE Release)
