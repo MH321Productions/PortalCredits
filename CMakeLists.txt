@@ -32,8 +32,16 @@ if(NOT CMAKE_BUILD_TYPE MATCHES Release)
 endif()
 
 #Libraries
+add_library(PortalCredits STATIC
+    src/PortalCredits/SoundHandler.cpp
+    src/PortalCredits/Util.cpp
+    src/PortalCredits/ConsoleHandler.cpp
+)
 
 list(APPEND libs
+    PortalCredits
+    sfml-audio
+    ncurses
 )
 
 #Main program
