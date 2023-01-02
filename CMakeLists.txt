@@ -36,6 +36,7 @@ add_library(PortalCredits STATIC
     src/PortalCredits/SoundHandler.cpp
     src/PortalCredits/Util.cpp
     src/PortalCredits/ConsoleHandler.cpp
+    src/PortalCredits/DrawHandler.cpp
 )
 
 list(APPEND libs
