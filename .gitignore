@@ -35,7 +35,6 @@
 bin/
 .vscode/
 doc/internal/
-__pycache__/
 
 # Generated Headers
 src/Generated/
