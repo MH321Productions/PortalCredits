@@ -5,7 +5,7 @@ project(portal-credits LANGUAGES CXX)
 include_directories(src)
 include_directories(lib)
 include_directories(include)
-include_directories(src/Script)
+include_directories(src/Generated)
 
 #Subdirectories
 set(BUILD_SHARED_LIBS OFF)

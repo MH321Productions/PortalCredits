@@ -35,6 +35,7 @@
 bin/
 .vscode/
 doc/internal/
+__pycache__/
 
-# Generated Song
-src/Script/Song.hpp
+# Generated Headers
+src/Generated/
