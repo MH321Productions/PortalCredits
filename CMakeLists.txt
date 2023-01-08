@@ -7,22 +7,23 @@ include_directories(lib)
 include_directories(include)
 include_directories(src/Generated)
 
+if (WIN32)
+    set(CMAKE_BUILD_TYPE Release)
+    set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded")
+    add_compile_definitions(PC_WINDOWS)
+else()
+    #set(CMAKE_CXX_FLAGS -no-pie)
+endif()
+
 #Subdirectories
 set(BUILD_SHARED_LIBS OFF)
 set(SFML_BUILD_EXAMPLES OFF)
 set(SFML_BUILD_GRAPHICS OFF)
 set(SFML_BUILD_WINDOW OFF)
 set(SFML_BUILD_NETWORK OFF)
+set(SFML_USE_STATIC_STD_LIBS ON)
 add_subdirectory(lib/SFML)
 include_directories(lib/SFML/include)
-
-if (WIN32)
-    set(CMAKE_BUILD_TYPE Release)
-    set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded")
-    add_compile_definitions(PC_WINDOWS)
-else()
-    set(CMAKE_CXX_FLAGS -no-pie)
-endif()
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_COMPILER g++)
@@ -34,7 +35,8 @@ endif()
 #Libraries
 add_library(PortalCredits STATIC
     src/PortalCredits/SoundHandler.cpp
-    src/PortalCredits/Util.cpp
+    src/PortalCredits/Symbols.cpp
+    src/PortalCredits/SystemHandler.cpp
     src/PortalCredits/ConsoleHandler.cpp
     src/PortalCredits/DrawHandler.cpp
 )
@@ -42,7 +44,6 @@ add_library(PortalCredits STATIC
 list(APPEND libs
     PortalCredits
     sfml-audio
-    ncurses
 )
 
 #Main program
