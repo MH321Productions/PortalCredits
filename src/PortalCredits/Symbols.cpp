@@ -1,21 +1,10 @@
 #include <iostream>
 
 #include "PortalCredits/Util.hpp"
-#include "PortalCredits/WinInclude.hpp"
 
 using namespace std;
 
 namespace PortalCredits {
-
-    void Util::setupWindows() {
-        #ifdef PC_WINDOWS
-        SetConsoleCP(65001);
-        SetConsoleOutputCP(65001);
-        SetConsoleTitleA("PortalCredits");
-
-        
-        #endif
-    }
 
     vector<string> Symbols::getSymbol(PortalSymbols symbol) {
         return symbols.at((int) symbol);
