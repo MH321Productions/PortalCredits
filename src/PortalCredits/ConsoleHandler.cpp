@@ -8,92 +8,106 @@ using namespace std;
 
 namespace PortalCredits {
 
-    void ConsoleHandler::init() {
-        if (isNcursesActive) return;
+    bool ConsoleHandler::init() {
+        if (active) return true;
 
-        Util::setupWindows();
+        if (!sys.init()) return false;
 
         cout << "\033[?1049h" << flush; //Enable alternative buffer
 
-        //Init ncurses
-        initscr();
-        cbreak();
-        noecho();
-        nonl();
-        intrflush(stdscr, false);
-        keypad(stdscr, true);
-        isNcursesActive = true;
+        //Save terminal size and title for later
+        sys.getSize(&prevWidth, &prevHeight);
+        prevTitle = sys.getWindowTitle();
 
-        //Save terminal size for later
-        getmaxyx(stdscr, prevHeight, prevWidth);
+        active = true;
+        return true;
     }
 
     void ConsoleHandler::close() {
-        //Close ncurses
-        if (isNcursesActive) {
-            endwin();
-            isNcursesActive = false;
-        }
+        if (!active) return;
 
         cout << "\033[?1049l";  //Disable alternative buffer, restore previous state
         cout << "\033]110\007"; //Reset foreground color
         cout << "\033]111\007"; //Reset background color
+        
         resize(prevWidth, prevHeight);
+        setTitle(prevTitle);
+
+        sys.close();
     }
 
-    void ConsoleHandler::clearScreen() {
-        if (isNcursesActive) clear();
+    void ConsoleHandler::setTitle(const string& title) {
+        cout << "\033]2;" << title << "\033\\";
     }
 
-    void ConsoleHandler::resize(const int& width, const int& height) {
+    ConsoleHandler& ConsoleHandler::clearScreen() {
+        //Move cursor to (0, 0) and clear everything underneath it
+        cout << "\033[0;0H\033[0J" << flush;
+
+        return *this;
+    }
+
+    ConsoleHandler& ConsoleHandler::resize(const int& width, const int& height) {
+        #ifdef PC_WINDOWS
+        sys.resize(width, height);
+        #else
         cout << "\033[8;" << height << ';' << width << 't' << flush; //Resize terminal window through escape code
+        #endif
 
-        if (isNcursesActive) resizeterm(height, width); //Resize ncurses window
+        return *this;
     }
 
-    void ConsoleHandler::setBackgroundColor(const unsigned char& r, const unsigned char& g, const unsigned char& b) {
-        //ESC]11;#rrggbbBEL
-        cout << "\033]11;#" << hex
-        << setw(2) << setfill('0') << (int) r
-        << setw(2) << setfill('0') << (int) (g)
-        << setw(2) << setfill('0') << (int) (b) << "\007" << dec << flush;
+    ConsoleHandler& ConsoleHandler::setBackgroundColor(const unsigned char& r, const unsigned char& g, const unsigned char& b) {
+        //Set the background color and clear the screen
+        cout << "\033[48;2;" << (int) r << ';' << (int) g << ';' << (int) b << 'm';
+        cout << "\033[0;0H\033[0J";
+
+        return *this;
     }
 
-    void ConsoleHandler::setForegroundColor(const unsigned char& r, const unsigned char& g, const unsigned char& b) {
-        //ESC]10;#rrggbbBEL
-        cout << "\033]10;#" << hex
-        << setw(2) << setfill('0') << (int) r
-        << setw(2) << setfill('0') << (int) g
-        << setw(2) << setfill('0') << (int) b << "\007" << dec << flush;
+    ConsoleHandler& ConsoleHandler::setForegroundColor(const unsigned char& r, const unsigned char& g, const unsigned char& b) {
+        cout << "\033[38;2;" << (int) r << ';' << (int) g << ';' << (int) b << 'm';
+
+        return *this;
     }
 
-    void ConsoleHandler::setCursorPosition(const int& x, const int& y) {
-        if (isNcursesActive) move(y, x);
+    ConsoleHandler& ConsoleHandler::moveCursor(const int& x, const int& y) {
+        cout << "\033[" << y << ';' << x << 'H';
+
+        return *this;
     }
 
-    void ConsoleHandler::setCursorVisibility(CursorVisibility visibility) {
-        if (isNcursesActive) curs_set((int) visibility);
+    ConsoleHandler& ConsoleHandler::write(const string& text) {
+        cout << text;
+
+        return *this;
+    }
+
+    ConsoleHandler& ConsoleHandler::setCursorVisibility(CursorVisibility visibility) {
+        //if (active) curs_set((int) visibility);
+
+        return *this;
     }
 
     int ConsoleHandler::getChar() {
-        if (isNcursesActive) return getch();
-        else return 0;
+        return cin.get();
     }
 
-    void ConsoleHandler::update() {
-        if (isNcursesActive) refresh();
+    ConsoleHandler& ConsoleHandler::update() {
+        cout.flush();
+
+        return *this;
     }
 
     //Operators
 
     ConsoleHandler& operator << (ConsoleHandler& handler, const string& str) {
-        if (handler.isNcursesActive) addstr(str.c_str());
-
+        handler.write(str);
         return handler;
     }
 
     ConsoleHandler& operator<<(ConsoleHandler& handler, const Pos& pos) {
-        if (handler.isNcursesActive) handler.setCursorPosition(pos.x, pos.y);
+        if (handler.active) handler.moveCursor(pos.x, pos.y);
 
         return handler;
     }

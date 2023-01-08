@@ -4,7 +4,7 @@
 #include <string>
 #include <sstream>
 
-#include <ncurses.h>
+#include "PortalCredits/Util.hpp"
 
 namespace PortalCredits {
 
@@ -27,18 +27,21 @@ namespace PortalCredits {
         StrongVisible
     };
 
+
+
     /**
      * This class handles the communication with the console
      * through escape codes and WINAPI calls
     */
     class ConsoleHandler {
         public:
-            ConsoleHandler() : prevWidth(0), prevHeight(0), isNcursesActive(false) {}
+            ConsoleHandler() : prevWidth(0), prevHeight(0), active(false) {}
 
             /**
              * Initializes the console
+             * @return If everything was successful
             */
-            void init();
+            bool init();
 
             /**
              * Resets the console to the previous state
@@ -46,45 +49,64 @@ namespace PortalCredits {
             void close();
 
             /**
-             * Clears the console buffer
+             * Updates the console window's title
+             * @param title The new title
             */
-            void clearScreen();
+            void setTitle(const std::string& title);
+
+            /**
+             * Clears the console buffer
+             * @return a reference to the handler
+            */
+            ConsoleHandler& clearScreen();
 
             /**
              * Resizes the console window
              * @param width The width in characters
              * @param height The height in characters
+             * @return a reference to the handler
             */
-            void resize(const int& width, const int& height);
+            ConsoleHandler& resize(const int& width, const int& height);
 
             /**
              * Sets the window background color to a specified rgb value
              * @param r The red value [0; 255]
              * @param g The green value [0; 255]
              * @param b The blue value [0;255]
+             * @return a reference to the handler
             */
-            void setBackgroundColor(const unsigned char& r, const unsigned char& g, const unsigned char& b);
+            ConsoleHandler& setBackgroundColor(const unsigned char& r, const unsigned char& g, const unsigned char& b);
 
             /**
              * Sets the window foregound color to a specified rgb value
              * @param r The red value [0; 255]
              * @param g The green value [0; 255]
              * @param b The blue value [0;255]
+             * @return a reference to the handler
             */
-            void setForegroundColor(const unsigned char& r, const unsigned char& g, const unsigned char& b);
+            ConsoleHandler& setForegroundColor(const unsigned char& r, const unsigned char& g, const unsigned char& b);
 
             /**
              * Sets the cursor position
              * @param x The x coordinate
              * @param y The y coordinate
+             * @return a reference to the handler
             */
-            void setCursorPosition(const int& x, const int& y);
+            ConsoleHandler& moveCursor(const int& x, const int& y);
+
+            /**
+             * Writes text to the current cursor position
+             * @param text The text to write
+             * @return a reference to the handler
+            */
+            ConsoleHandler& write(const std::string& text);
 
             /**
              * Updates the cursor visibility
              * @param visibility The new visibility
+             * @return a reference to the handler
             */
-            void setCursorVisibility(CursorVisibility visibility);
+            ConsoleHandler& setCursorVisibility(CursorVisibility visibility);
 
             /**
              * Returns a pressed char. This method blocks until a key is pressed
@@ -94,14 +116,15 @@ namespace PortalCredits {
 
             /**
              * Refreshes the console, i.e. makes the changes visible
+             * @return a reference to the handler
             */
-            void update();
+            ConsoleHandler& update();
 
             /**
-             * Queries the state of the ncurses library
-             * @return Whether ncurses is active
+             * Queries the state of the console
+             * @return Whether the console raw mode is active
             */
-            bool isActive() {return isNcursesActive;}
+            bool isActive() {return active;}
 
             //Operators
 
@@ -111,8 +134,11 @@ namespace PortalCredits {
         
         private:
             int prevWidth, prevHeight;
-            bool isNcursesActive;
+            std::string prevTitle;
+            bool active;
             std::ostringstream str;
+
+            SystemHandler sys;
     };
 
     /**
@@ -130,7 +156,7 @@ namespace PortalCredits {
     */
     template<typename T> ConsoleHandler& operator << (ConsoleHandler& handler, const T& val) {
         handler.str << val;
-        addstr(handler.str.str().c_str());
+        handler.write(handler.str.str());
         handler.str.str("");
         handler.str.clear();
 
