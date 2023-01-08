@@ -5,17 +5,58 @@
 #include <array>
 #include <string>
 
+#ifdef PC_WINDOWS
+#include "PortalCredits/WinInclude.hpp"
+#else
+#include <termios.h>
+#include <unistd.h>
+#endif
+
 namespace PortalCredits {
 
     /**
-     * A singleton class with util methods
+     * This class configures the console on different systems
     */
-    class Util {
+    class SystemHandler {
         public:
             /**
-             * Prepares the program for Windows use
+             * Init the console
+             * @return If everything was successful
             */
-            static void setupWindows();
+            bool init();
+
+            /**
+             * Resets the console
+            */
+            void close();
+
+            /**
+             * Query the console size
+            */
+            void getSize(int* width, int* height);
+
+            /**
+             * Query the console window's title
+             * @return The title
+            */
+            std::string getWindowTitle();
+
+            #ifdef PC_WINDOWS
+            /**
+             * Resizes the console and its window
+             * @param width The new width in characters
+             * @param height The new height in characters
+            */
+            bool resize(const int& width, const int& height);
+            #endif
+        
+        private:
+            #ifdef PC_WINDOWS
+            HANDLE hIn, hOut;
+            DWORD origIn, origOut;
+            #else
+            struct termios origAttr;
+            #endif
     };
 
     /**
