@@ -3,8 +3,6 @@
 
 #include <vector>
 
-//#include "PortalCredits/ConsoleHandler.hpp"
-
 namespace PortalCredits {
     enum class PortalSymbols: unsigned char;
     class ConsoleHandler;
@@ -12,6 +10,18 @@ namespace PortalCredits {
     struct Rect {
         int x, y;
         int width, height;
+    };
+
+    /**
+     * This enum contains the three drawing areas
+    */
+    enum class DrawArea : unsigned char {
+        //The lyrics in the left half
+        Lyrics,
+        //The credits in the top right corner
+        Credits,
+        //The logo in the bottom right corner
+        Logo
     };
 
     /**
@@ -44,6 +54,15 @@ namespace PortalCredits {
             void drawSymbol(PortalSymbols symbol);
 
             /**
+             * Draw text in the specified area
+             * @param area The area to draw to (NOT Logo)
+             * @param text The text, splitted in lines
+             * @param stringIndex The index of the current line
+             * @param stringPosition The index of the current char in the current line
+            */
+            void drawText(DrawArea area, const std::vector<std::string>& text, const size_t& stringIndex, const size_t& stringPosition);
+
+            /**
              * Queries the draw mode
              * @return Whether the outlines are drawn in a modern way
             */
@@ -54,9 +73,22 @@ namespace PortalCredits {
              * @param drawModern Whether the outlines should be drawn in a modern way
             */
             void setDrawModern(const bool& drawModern) {this->drawModern = drawModern;}
+
+            /**
+             * Clears the specified drawing area
+             * @param area The area to clear
+            */
+            void clearArea(DrawArea area) {clearArea(areas.at((int) area));}
+
+            /**
+             * Clears the specified drawing area
+             * @param area The area to clear
+            */
+            void clearArea(const Rect& area);
         
         private:
             static const std::vector<Rect> outline;
+            static const std::vector<Rect> areas;
 
             ConsoleHandler& console;
             bool drawModern;

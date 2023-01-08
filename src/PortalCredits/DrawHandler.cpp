@@ -1,7 +1,5 @@
 #include <iostream>
 
-#include <ncurses.h>
-
 #include "PortalCredits/DrawHandler.hpp"
 #include "PortalCredits/ConsoleHandler.hpp"
 #include "PortalCredits/Util.hpp"
@@ -11,29 +9,38 @@ using namespace std;
 namespace PortalCredits {
 
     const vector<Rect> DrawHandler::outline = {
-        {0, 0, 50, 50},
-        {50, 0, 50, 25}
+        {0, 0, 50, 40},
+        {50, 0, 50, 21}
+    };
+
+    const vector<Rect> DrawHandler::areas = {
+        {1, 2, 48, 38},
+        {51, 2, 48, 18},
+        {55, 21, 45, 23}
     };
 
     void DrawHandler::init() {
         console.init();
+        console.setTitle("PortalCredits");
+        console.resize(100, 41);
         console.setBackgroundColor(0, 0, 0);
         console.setForegroundColor(219, 164, 10);
-        console.resize(100, 50);
     }
 
     void DrawHandler::drawOutlines() {
         //Change characters based on draw mode
-        chtype cHorizontal, cVertical;
-        chtype cTopLeft, cTopRight;
-        chtype cBottomLeft, cBottomRight;
+        string cHorizontal, cVertical;
+        string cTopLeft, cTopRight;
+        string cBottomLeft, cBottomRight;
         if (drawModern) {
-            cHorizontal = ACS_HLINE;
-            cVertical = ACS_VLINE;
-            cTopLeft = ACS_ULCORNER;
-            cTopRight = ACS_URCORNER;
-            cBottomLeft = ACS_LLCORNER;
-            cBottomRight = ACS_LRCORNER;
+            cout << "\033(0"; //Switch to line drawing character set
+            
+            cHorizontal = 0x71;     // -> "\u2500"
+            cVertical = 0x78;       // -> "\u2502"
+            cTopLeft = 0x6C;        // -> "\u250C"
+            cTopRight = 0x6B;       // -> "\u2510"
+            cBottomLeft = 0x6D;     // -> "\u2514"
+            cBottomRight = 0x6A;    // -> "\u2518"
         } else {
             cHorizontal = '-';
             cVertical = '|';
@@ -43,30 +50,72 @@ namespace PortalCredits {
             cBottomRight = ' ';
         }
 
-        //Draw horizontal lines
         for (const Rect& r: outline) {
             int i;
 
             for (i = 1; i < r.width - 1; i++) {
-                mvaddch(r.y, r.x + i, cHorizontal);                         //Top line
-                mvaddch(r.y + r.height - 1, r.x + i, cHorizontal);          //Bottom line
+                console.moveCursor(r.x + i, r.y).write(cHorizontal); //Top line
+                console.moveCursor(r.x + i, r.y + r.height - 1).write(cHorizontal); //Bottom line
             }
 
             for (i = 1; i < r.height - 1; i++) {
-                mvaddch(r.y + i, r.x, cVertical);                           //Left line
-                mvaddch(r.y + i, r.x + r.width - 1, cVertical);             //Right line
+                console.moveCursor(r.x, r.y + i).write(cVertical); //Left line
+                console.moveCursor(r.x + r.width - 1, r.y + i).write(cVertical); //Right line
             }
 
-            mvaddch(r.y, r.x, cTopLeft);                                    //Top left corner
-            mvaddch(r.y, r.x + r.width - 1, cTopRight);                     //Top right corner
-            mvaddch(r.y + r.height - 1, r.x, cBottomLeft);                  //Bottom left corner
-            mvaddch(r.y + r.height - 1, r.x + r.width - 1, cBottomRight);   //Bottom right corner
+            console.moveCursor(r.x, r.y).write(cTopLeft);
+            console.moveCursor(r.x + r.width - 1, r.y).write(cTopRight);
+            console.moveCursor(r.x, r.y + r.height - 1).write(cBottomLeft);
+            console.moveCursor(r.x + r.width - 1, r.y + r.height - 1).write(cBottomRight);
         }
+
+        if (drawModern) cout << "\033(B"; //Switch to US-ASCII
     }
 
     void DrawHandler::drawSymbol(PortalSymbols symbol) {
         vector<string> text = Symbols::getSymbol(symbol);
 
-        for (int i = 0; i < text.size(); i++) mvaddstr(27 + i, 55, text.at(i).c_str());
+        for (int i = 0; i < text.size(); i++) console.moveCursor(55, 21 + i).write(text.at(i));
+    }
+
+    void DrawHandler::drawText(DrawArea area, const vector<string>& text, const size_t& stringIndex, const size_t& stringPosition) {
+        if (area == DrawArea::Logo) return; //Logo does nothing
+
+        const Rect& r = areas.at((int) area);
+        int startY, startIndex, numLines, drawPos;
+
+        if (area == DrawArea::Credits) { //Draw from bottom to top
+            //Determine text position
+            if (stringIndex < r.height) {
+                startY = r.y + r.height - stringIndex - 1;
+                startIndex = 0;
+            } else {
+                startY = r.y;
+                startIndex = stringIndex - r.height + 1;
+            }
+            numLines = stringIndex - startIndex;
+            drawPos = r.y + r.height - 1;
+        } else { //Draw from top to bottom
+            startY = r.y;
+            startIndex = 0;
+            numLines = stringIndex;
+            drawPos = r.y + stringIndex;
+        }
+
+        if (stringIndex) {
+                for (int i = 0; i < numLines; i++) { //previous lines
+                    console.moveCursor(r.x, startY + i).write(text.at(startIndex + i));
+                }
+            }
+
+        console.moveCursor(r.x, drawPos);
+        for (int i = 0; i < stringPosition; i++) console << text.at(stringIndex).at(i);
+    }
+
+    void DrawHandler::clearArea(const Rect& area) {
+        for (int i = 0; i < area.height; i++) {
+            console.moveCursor(area.x, area.y + i);
+            cout << "\033[" << area.width << 'X';
+        }
     }
 }
