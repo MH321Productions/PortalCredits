@@ -83,8 +83,16 @@ namespace PortalCredits {
         return *this;
     }
 
-    ConsoleHandler& ConsoleHandler::setCursorVisibility(CursorVisibility visibility) {
-        //if (active) curs_set((int) visibility);
+    ConsoleHandler& ConsoleHandler::setCursorVisibility(const bool& showCursor) {
+        //ESC[?25h -> Show cursor
+        //ESC[?25l -> Hide cursor
+        cout << "\033[?25" << (showCursor ? 'h' : 'l');
+
+        return *this;
+    }
+
+    ConsoleHandler& ConsoleHandler::setCursorType(CursorType type) {
+        cout << "\033[" << (int) type << " q";
 
         return *this;
     }

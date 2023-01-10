@@ -19,15 +19,24 @@ namespace PortalCredits {
     };
 
     /**
-     * This enum contains the different visibility for the cursor
+     * This enum contains the different cursor types
     */
-    enum class CursorVisibility : unsigned char {
-        Invisible,
-        Visible,
-        StrongVisible
+    enum class CursorType : unsigned char {
+        //The system's default type
+        Default,
+        //A blinking block character (default in xterm and its derivates)
+        BlinkingBlock,
+        //A block character
+        SteadyBlock,
+        //A blinking underline character (default in Windows terminal)
+        BlinkingUnderline,
+        //An underline character
+        SteadyUnderline,
+        //A blinking bar (|) character
+        BlinkingBar,
+        //A bar (|) character
+        SteadyBar
     };
-
-
 
     /**
      * This class handles the communication with the console
@@ -103,10 +112,17 @@ namespace PortalCredits {
 
             /**
              * Updates the cursor visibility
-             * @param visibility The new visibility
+             * @param showCursor Whether to show the cursor
              * @return a reference to the handler
             */
-            ConsoleHandler& setCursorVisibility(CursorVisibility visibility);
+            ConsoleHandler& setCursorVisibility(const bool& showCursor);
+
+            /**
+             * Updates the cursor type
+             * @param type The new type
+             * @return a reference to the handler
+            */
+            ConsoleHandler& setCursorType(CursorType type);
 
             /**
              * Returns a pressed char. This method blocks until a key is pressed
