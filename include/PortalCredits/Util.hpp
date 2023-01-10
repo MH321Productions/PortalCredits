@@ -54,6 +54,7 @@ namespace PortalCredits {
             #ifdef PC_WINDOWS
             HANDLE hIn, hOut;
             DWORD origIn, origOut;
+            long origStyle;
             #else
             struct termios origAttr;
             #endif

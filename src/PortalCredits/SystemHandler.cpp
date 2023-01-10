@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "PortalCredits/Util.hpp"
+#include "PortalCredits/ConsoleHandler.hpp"
 
 using namespace std;
 
@@ -8,6 +9,17 @@ namespace PortalCredits {
 
     bool SystemHandler::init() {
         #ifdef PC_WINDOWS
+        //Check whether the program has its own console
+        HWND window = GetConsoleWindow();
+        DWORD pid;
+        GetWindowThreadProcessId(window, &pid);
+        if (GetCurrentProcessId() != pid) { //The program doesn't have it's own console, create a new one
+            cout << "Starting PortalCredits with its own console" << endl;
+            FreeConsole();
+            AllocConsole();
+            window = GetConsoleWindow();
+        }
+
         SetConsoleCP(65001);
         SetConsoleOutputCP(65001);
 
@@ -17,9 +29,11 @@ namespace PortalCredits {
         //Save config for later
         GetConsoleMode(hIn, &origIn);
         GetConsoleMode(hOut, &origOut);
+        origStyle = GetWindowLong(window, GWL_STYLE);
 
-        SetConsoleMode(hIn, ENABLE_VIRTUAL_TERMINAL_INPUT | ENABLE_PROCESSED_INPUT);
-        SetConsoleMode(hOut, ENABLE_PROCESSED_OUTPUT | ENABLE_WRAP_AT_EOL_OUTPUT | ENABLE_VIRTUAL_TERMINAL_PROCESSING);
+        SetConsoleMode(hIn, ENABLE_VIRTUAL_TERMINAL_INPUT | ENABLE_PROCESSED_INPUT | ENABLE_EXTENDED_FLAGS);
+        SetConsoleMode(hOut, ENABLE_PROCESSED_OUTPUT | ENABLE_VIRTUAL_TERMINAL_PROCESSING | DISABLE_NEWLINE_AUTO_RETURN);
+        SetWindowLong(window, GWL_STYLE, origStyle & ~(WS_SIZEBOX | WS_MAXIMIZEBOX));
         #else
         int ttyfd = STDIN_FILENO;
 
@@ -77,6 +91,7 @@ namespace PortalCredits {
         #ifdef PC_WINDOWS
         SetConsoleMode(hIn, origIn);
         SetConsoleMode(hOut, origOut);
+        SetWindowLong(GetConsoleWindow(), GWL_STYLE, origStyle);
         #else
         if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &origAttr) < 0) cerr << "Couldn't reset console" << endl;
         #endif
@@ -169,11 +184,18 @@ namespace PortalCredits {
                                     return false;
                                 }
                             }
-                            return SetWindowPos(
+                            
+                            //Center window
+                            int nWidth = width * fi.dwFontSize.X + bw;
+                            int nHeight = height * fi.dwFontSize.Y + bh;
+                            int x = (GetSystemMetrics(SM_CXSCREEN) - nWidth) / 2;
+                            int y = (GetSystemMetrics(SM_CYSCREEN) - nHeight) / 2;
+
+                            BOOL res = SetWindowPos(
                                 hWnd, NULL,
-                                rect.left, rect.top,
-                                width * fi.dwFontSize.X + bw, height * fi.dwFontSize.Y + bh,
-                                SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER
+                                x, y,
+                                nWidth, nHeight,
+                                SWP_NOACTIVATE | SWP_NOOWNERZORDER | SWP_NOZORDER
                             );
                         }
                     }
@@ -182,6 +204,6 @@ namespace PortalCredits {
         }
         return false;
     }
-    
+
     #endif
 }
