@@ -14,8 +14,8 @@ namespace PortalCredits {
     };
 
     const vector<Rect> DrawHandler::areas = {
-        {1, 2, 48, 38},
-        {51, 2, 48, 18},
+        {2, 2, 47, 37},
+        {51, 2, 46, 18},
         {55, 21, 45, 23}
     };
 
@@ -83,6 +83,7 @@ namespace PortalCredits {
 
         const Rect& r = areas.at((int) area);
         int startY, startIndex, numLines, drawPos;
+        bool writePreviousLines;
 
         if (area == DrawArea::Credits) { //Draw from bottom to top
             //Determine text position
@@ -95,21 +96,27 @@ namespace PortalCredits {
             }
             numLines = stringIndex - startIndex;
             drawPos = r.y + r.height - 1;
+
+            //Only write previous lines if they are available and if a new line is drawn
+            writePreviousLines = stringIndex && !stringPosition;
         } else { //Draw from top to bottom
             startY = r.y;
             startIndex = 0;
             numLines = stringIndex;
             drawPos = r.y + stringIndex;
+            writePreviousLines = false; //Never write previous lines since they aren't overwritten
         }
 
-        if (stringIndex) {
+        
+        if (writePreviousLines) {
                 for (int i = 0; i < numLines; i++) { //previous lines
                     console.moveCursor(r.x, startY + i).write(text.at(startIndex + i));
                 }
             }
 
         console.moveCursor(r.x, drawPos);
-        for (int i = 0; i < stringPosition; i++) console << text.at(stringIndex).at(i);
+        //Only draw text if it is non-empty
+        if (text.at(stringIndex).size()) for (int i = 0; i <= stringPosition; i++) console << text.at(stringIndex).at(i);
     }
 
     void DrawHandler::clearArea(const Rect& area) {
