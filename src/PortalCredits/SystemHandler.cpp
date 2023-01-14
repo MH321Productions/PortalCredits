@@ -1,7 +1,6 @@
 #include <iostream>
 
-#include "PortalCredits/Util.hpp"
-#include "PortalCredits/ConsoleHandler.hpp"
+#include "PortalCredits/SystemHandler.hpp"
 
 using namespace std;
 
