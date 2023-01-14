@@ -2,7 +2,6 @@
 #include <iomanip>
 
 #include "PortalCredits/ConsoleHandler.hpp"
-#include "PortalCredits/Util.hpp"
 
 using namespace std;
 

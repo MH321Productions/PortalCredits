@@ -1,14 +1,14 @@
 #include <iostream>
 
 #include "PortalCredits/SoundHandler.hpp"
-#include "Song.hpp"
+#include "PortalCredits/Resources.hpp"
 
 using namespace std;
 
 namespace PortalCredits {
 
     bool SoundHandler::start() {
-        if (!music.openFromMemory(stillAlive.data(), stillAlive.size())) return false;
+        if (!music.openFromMemory(Resources::stillAlive.data(), Resources::stillAlive.size())) return false;
 
         music.play();
         

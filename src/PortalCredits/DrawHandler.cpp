@@ -2,7 +2,7 @@
 
 #include "PortalCredits/DrawHandler.hpp"
 #include "PortalCredits/ConsoleHandler.hpp"
-#include "PortalCredits/Util.hpp"
+#include "PortalCredits/Resources.hpp"
 
 using namespace std;
 
@@ -73,7 +73,7 @@ namespace PortalCredits {
     }
 
     void DrawHandler::drawSymbol(PortalSymbols symbol) {
-        vector<string> text = Symbols::getSymbol(symbol);
+        vector<string> text = Resources::getSymbol(symbol);
 
         for (int i = 0; i < text.size(); i++) console.moveCursor(55, 21 + i).write(text.at(i));
     }
