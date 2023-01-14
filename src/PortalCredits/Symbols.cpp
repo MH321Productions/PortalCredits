@@ -1,16 +1,16 @@
 #include <iostream>
 
-#include "PortalCredits/Util.hpp"
+#include "PortalCredits/Resources.hpp"
 
 using namespace std;
 
 namespace PortalCredits {
 
-    vector<string> Symbols::getSymbol(PortalSymbols symbol) {
+    vector<string> Resources::getSymbol(PortalSymbols symbol) {
         return symbols.at((int) symbol);
     }
 
-    const array<vector<string>, 10> Symbols::symbols = {
+    const array<vector<string>, 10> Resources::symbols = {
         //ApertureLogo
         vector<string> {
             "             .,-:;//;:=,",
