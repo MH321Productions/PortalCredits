@@ -33,6 +33,12 @@ if(NOT CMAKE_BUILD_TYPE MATCHES Release)
 endif()
 
 #Libraries
+add_library(PortalResources STATIC
+    src/Generated/Lyrics.cpp
+    src/Generated/Song.cpp
+    src/Generated/Timing.cpp
+)
+
 add_library(PortalCredits STATIC
     src/PortalCredits/SoundHandler.cpp
     src/PortalCredits/Symbols.cpp
@@ -43,6 +49,7 @@ add_library(PortalCredits STATIC
 
 list(APPEND libs
     PortalCredits
+    PortalResources
     sfml-audio
 )
 
