@@ -17,7 +17,7 @@ namespace PortalCredits {
             bool start();
 
             /**
-             * Stops the music if it isready started
+             * Stops the music if it is already started
             */
             void stop();
 
