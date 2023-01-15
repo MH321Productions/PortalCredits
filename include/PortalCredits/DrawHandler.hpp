@@ -2,6 +2,7 @@
 #define PC_DRAWHANDLER_HPP
 
 #include <vector>
+#include <string>
 
 namespace PortalCredits {
     enum class PortalSymbols: unsigned char;
