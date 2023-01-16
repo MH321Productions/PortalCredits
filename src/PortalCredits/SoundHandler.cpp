@@ -7,17 +7,20 @@ using namespace std;
 
 namespace PortalCredits {
 
-    bool SoundHandler::start() {
-        if (!music.openFromMemory(Resources::stillAlive.data(), Resources::stillAlive.size())) return false;
+    bool SoundHandler::load() {
+        loaded = music.openFromMemory(Resources::stillAlive.data(), Resources::stillAlive.size());
+        return loaded;
+    }
 
-        music.play();
-        
-        while (music.getStatus() == sf::SoundSource::Status::Playing);
-        
-        return true;
+    void SoundHandler::play() {
+        if (loaded) music.play();
+    }
+
+    void SoundHandler::pause() {
+        if (loaded) music.pause();
     }
 
     void SoundHandler::stop() {
-        music.stop();
+        if (loaded) music.stop();
     }
 }

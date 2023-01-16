@@ -10,19 +10,32 @@ namespace PortalCredits {
     */
     class SoundHandler {
         public:
-            /**
-             * Loads the music and starts it
-             * @return If the music could be loaded
-            */
-            bool start();
+            SoundHandler() : loaded(false) {}
 
             /**
-             * Stops the music if it is already started
+             * Loads the music
+             * @return Whether the load was successful
+            */
+            bool load();
+
+            /**
+             * Starts or resumes the music if it is loaded
+            */
+            void play();
+
+            /**
+             * Pauses the music if it is running
+            */
+            void pause();
+
+            /**
+             * Stops the music if it is running
             */
             void stop();
 
         private:
             sf::Music music;
+            bool loaded;
     };
 }
 
