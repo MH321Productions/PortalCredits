@@ -82,9 +82,10 @@ namespace PortalCredits {
              * @param r The red value [0; 255]
              * @param g The green value [0; 255]
              * @param b The blue value [0;255]
+             * @param clear When true, the screen is cleared, making the given color the background color for the whole window
              * @return a reference to the handler
             */
-            ConsoleHandler& setBackgroundColor(const unsigned char& r, const unsigned char& g, const unsigned char& b);
+            ConsoleHandler& setBackgroundColor(const unsigned char& r, const unsigned char& g, const unsigned char& b, const bool& clear = false);
 
             /**
              * Sets the window foregound color to a specified rgb value

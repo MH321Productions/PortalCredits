@@ -56,10 +56,10 @@ namespace PortalCredits {
         return *this;
     }
 
-    ConsoleHandler& ConsoleHandler::setBackgroundColor(const unsigned char& r, const unsigned char& g, const unsigned char& b) {
+    ConsoleHandler& ConsoleHandler::setBackgroundColor(const unsigned char& r, const unsigned char& g, const unsigned char& b, const bool& clear) {
         //Set the background color and clear the screen
         cout << "\033[48;2;" << (int) r << ';' << (int) g << ';' << (int) b << 'm';
-        cout << "\033[0;0H\033[0J";
+        if (clear) cout << "\033[0;0H\033[0J";
 
         return *this;
     }
