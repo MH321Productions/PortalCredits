@@ -30,7 +30,7 @@ namespace PortalCredits {
         GetConsoleMode(hOut, &origOut);
         origStyle = GetWindowLong(window, GWL_STYLE);
 
-        SetConsoleMode(hIn, ENABLE_VIRTUAL_TERMINAL_INPUT | ENABLE_PROCESSED_INPUT | ENABLE_EXTENDED_FLAGS);
+        SetConsoleMode(hIn, ENABLE_VIRTUAL_TERMINAL_INPUT | ENABLE_EXTENDED_FLAGS);
         SetConsoleMode(hOut, ENABLE_PROCESSED_OUTPUT | ENABLE_VIRTUAL_TERMINAL_PROCESSING | DISABLE_NEWLINE_AUTO_RETURN);
         SetWindowLong(window, GWL_STYLE, origStyle & ~(WS_SIZEBOX | WS_MAXIMIZEBOX));
         #else
