@@ -22,7 +22,9 @@ namespace PortalCredits {
         //The credits in the top right corner
         Credits,
         //The logo in the bottom right corner
-        Logo
+        Logo,
+        //The whole screen used in the main menu
+        Menu
     };
 
     /**
@@ -45,8 +47,9 @@ namespace PortalCredits {
 
             /**
              * Draws the outlines for the text
+             * @param drawMenu Draw the menu outlines instead of the lyrics and credits
             */
-            void drawOutlines();
+            void drawOutlines(const bool& drawMenu = false);
 
             /**
              * Draws the specified symbol to the screen
@@ -88,7 +91,8 @@ namespace PortalCredits {
             void clearArea(const Rect& area);
         
         private:
-            static const std::vector<Rect> outline;
+            static const std::vector<Rect> outlineMain;
+            static const std::vector<Rect> outlineMenu;
             static const std::vector<Rect> areas;
 
             ConsoleHandler& console;

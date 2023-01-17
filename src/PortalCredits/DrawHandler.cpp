@@ -8,26 +8,31 @@ using namespace std;
 
 namespace PortalCredits {
 
-    const vector<Rect> DrawHandler::outline = {
+    const vector<Rect> DrawHandler::outlineMain = {
         {0, 0, 50, 40},
         {50, 0, 50, 21}
+    };
+
+    const vector<Rect> DrawHandler::outlineMenu = {
+        {0, 0, 100, 42}
     };
 
     const vector<Rect> DrawHandler::areas = {
         {2, 2, 47, 37},
         {51, 2, 46, 18},
-        {55, 21, 45, 23}
+        {55, 21, 45, 23},
+        {2, 2, 97, 39}
     };
 
     void DrawHandler::init() {
         console.init();
         console.setTitle("PortalCredits");
         console.resize(100, 41);
-        console.setBackgroundColor(0, 0, 0);
+        console.setBackgroundColor(0, 0, 0, true);
         console.setForegroundColor(219, 164, 10);
     }
 
-    void DrawHandler::drawOutlines() {
+    void DrawHandler::drawOutlines(const bool& drawMenu) {
         //Change characters based on draw mode
         string cHorizontal, cVertical;
         string cTopLeft, cTopRight;
@@ -50,7 +55,7 @@ namespace PortalCredits {
             cBottomRight = ' ';
         }
 
-        for (const Rect& r: outline) {
+        for (const Rect& r: (drawMenu ? outlineMenu : outlineMain)) {
             int i;
 
             for (i = 1; i < r.width - 1; i++) {
