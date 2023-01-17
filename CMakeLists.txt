@@ -42,6 +42,7 @@ add_library(PortalResources STATIC
 add_library(PortalCredits STATIC
     src/PortalCredits/App.cpp
     src/PortalCredits/AppHandlers.cpp
+    src/PortalCredits/InputHandler.cpp
     src/PortalCredits/SoundHandler.cpp
     src/PortalCredits/Symbols.cpp
     src/PortalCredits/SystemHandler.cpp
