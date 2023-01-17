@@ -24,6 +24,15 @@ namespace PortalCredits {
     };
 
     /**
+     * This struct contains information
+     * for a binary array
+    */
+    struct BinaryData {
+        unsigned char* data;
+        size_t size;
+    };
+
+    /**
      * This enum contains all ASCII art symbols
      * that are drawn in the bottom right corner
     */
@@ -60,7 +69,7 @@ namespace PortalCredits {
             /**
              * This vector contains a hexdump of the song audio file.
             */
-            static const std::vector<unsigned char> stillAlive;
+            static const BinaryData stillAlive;
 
             /**
              * The start time of the audio (in seconds)

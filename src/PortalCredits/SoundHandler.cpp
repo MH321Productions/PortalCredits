@@ -8,7 +8,7 @@ using namespace std;
 namespace PortalCredits {
 
     bool SoundHandler::load() {
-        loaded = music.openFromMemory(Resources::stillAlive.data(), Resources::stillAlive.size());
+        loaded = music.openFromMemory(Resources::stillAlive.data, Resources::stillAlive.size);
         return loaded;
     }
 
