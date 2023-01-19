@@ -94,6 +94,33 @@ namespace PortalCredits {
             static const std::vector<TimeInfo> timingLogos;
 
             /**
+             * This vector contains the GNU GPLv3 License text, splitted in lines
+            */
+            static const std::vector<std::string> license;
+
+            /**
+             * This vector contains the sections 15 and 16 of the GPL (warranty and liability)
+            */
+            static const std::vector<std::string> warranty;
+
+            /**
+             * This vector contains the sections 4 to 6 of the GPL (redistributing conditions)
+            */
+            static const std::vector<std::string> conditions;
+
+            /**
+             * This vector contains the title screen text
+             * Note: The text uses the Line drawing character set
+            */
+            static const std::vector<std::string> titleMain;
+
+            /**
+             * This vector contains the about screen text
+             * Note: The text uses the Line drawing character set
+            */
+            static const std::vector<std::string> titleAbout;
+
+            /**
              * Returns the ASCII art for the given symbol
              * @param symbol The symbol to use
              * @return The symbol, splitted in lines

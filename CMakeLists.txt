@@ -37,6 +37,8 @@ add_library(PortalResources STATIC
     src/Generated/Lyrics.cpp
     src/Generated/Song.cpp
     src/Generated/Timing.cpp
+    src/Generated/License.cpp
+    src/Generated/Title.cpp
 )
 
 add_library(PortalCredits STATIC
