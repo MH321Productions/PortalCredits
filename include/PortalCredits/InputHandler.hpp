@@ -9,12 +9,15 @@ namespace PortalCredits {
 
     /**
      * This enum contains alias codes for the arrow keys
+     * and key constants
     */
-    enum ArrowKeys : int {
+    enum Keys : int {
         ArrowLeft = -5,
         ArrowRight,
         ArrowDown,
-        ArrowUp
+        ArrowUp,
+        Enter = '\r',
+        Space = ' '
     };
 
     /**
