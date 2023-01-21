@@ -7,9 +7,11 @@
 
 namespace PortalCredits {
 
+    enum class AppMode: unsigned char;
+
     /**
      * This struct contains timing information
-     * for the Lyrics and Credits
+     * for the Lyrics, Credits and Logos
     */
     struct TimeInfo {
         //The index of the page (unused for Credits) and the line (unused for logos)
@@ -30,6 +32,16 @@ namespace PortalCredits {
     struct BinaryData {
         unsigned char* data;
         size_t size;
+    };
+
+    /**
+     * This struct contains information
+     * for a menu entry
+    */
+    struct MenuInfo {
+        int x, y;
+        std::string text;
+        AppMode newMode;
     };
 
     /**
@@ -119,6 +131,16 @@ namespace PortalCredits {
              * Note: The text uses the Line drawing character set
             */
             static const std::vector<std::string> titleAbout;
+
+            /**
+             * This vector contains the menu entries for the main menu
+            */
+            static const std::vector<MenuInfo> menuMain;
+
+            /**
+             * This vector contains the menu entries for the about menu
+            */
+            static const std::vector<MenuInfo> menuAbout;
 
             /**
              * Returns the ASCII art for the given symbol

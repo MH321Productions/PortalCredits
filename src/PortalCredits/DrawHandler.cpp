@@ -83,6 +83,17 @@ namespace PortalCredits {
         for (int i = 0; i < text.size(); i++) console.moveCursor(55, 21 + i).write(text.at(i));
     }
 
+    void DrawHandler::drawTitle(const bool& drawAboutTitle) {
+        vector<string> text = drawAboutTitle ? Resources::titleAbout : Resources::titleMain;
+
+        //Switch to line drawing character set
+        cout << "\033(0";
+
+        for (int i = 0; i < text.size(); i++) console.moveCursor(3, 2 + i).write(text.at(i));
+
+        cout << "\033(B"; //Switch to US-ASCII
+    }
+
     void DrawHandler::drawText(DrawArea area, const vector<string>& text, const size_t& stringIndex, const size_t& stringPosition) {
         if (area == DrawArea::Logo) return; //Logo does nothing
 

@@ -1,0 +1,10 @@
+//Title menu with temporary positions
+20 20 5 Run
+20 22 6 Run with modern outlines
+20 24 1 About
+20 26 7 Quit
+#
+13 32 2 Warranty
+26 32 3 Redistributing conditions
+56 32 4 License
+68 32 0 Back to main menu

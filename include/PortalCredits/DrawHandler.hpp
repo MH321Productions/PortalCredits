@@ -58,6 +58,12 @@ namespace PortalCredits {
             void drawSymbol(PortalSymbols symbol);
 
             /**
+             * Draws the specified title sequence to the screen
+             * @param drawAboutTitle Whether to draw the about title rather than the main title
+            */
+            void drawTitle(const bool& drawAboutTitle);
+
+            /**
              * Draw text in the specified area
              * @param area The area to draw to (NOT Logo)
              * @param text The text, splitted in lines

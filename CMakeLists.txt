@@ -39,11 +39,13 @@ add_library(PortalResources STATIC
     src/Generated/Timing.cpp
     src/Generated/License.cpp
     src/Generated/Title.cpp
+    src/Generated/Menu.cpp
 )
 
 add_library(PortalCredits STATIC
     src/PortalCredits/App.cpp
-    src/PortalCredits/AppHandlers.cpp
+    src/PortalCredits/LoopHandlers.cpp
+    src/PortalCredits/RenderHandlers.cpp
     src/PortalCredits/InputHandler.cpp
     src/PortalCredits/SoundHandler.cpp
     src/PortalCredits/Symbols.cpp
@@ -51,11 +53,12 @@ add_library(PortalCredits STATIC
     src/PortalCredits/ConsoleHandler.cpp
     src/PortalCredits/DrawHandler.cpp
 )
+target_link_libraries(PortalCredits PRIVATE sfml-audio)
 
 list(APPEND libs
+    sfml-audio
     PortalCredits
     PortalResources
-    sfml-audio
 )
 
 #Main program
