@@ -130,13 +130,13 @@ namespace PortalCredits {
             static const LicenseInfo conditions;
 
             /**
-             * This vector contains the title screen text
+             * This vector contains the main screen title
              * Note: The text uses the Line drawing character set
             */
             static const std::vector<std::string> titleMain;
 
             /**
-             * This vector contains the about screen text
+             * This vector contains the about screen title
              * Note: The text uses the Line drawing character set
             */
             static const std::vector<std::string> titleAbout;
