@@ -10,19 +10,19 @@ using namespace std;
 namespace PortalCredits {
 
     const vector<Rect> DrawHandler::outlineMain = {
-        {0, 0, 50, 40},
+        {0, 0, 50, CONSOLE_HEIGHT},
         {50, 0, 50, 21}
     };
 
     const vector<Rect> DrawHandler::outlineMenu = {
-        {0, 0, 100, 42}
+        {0, 0, CONSOLE_WIDTH, CONSOLE_HEIGHT + 1}
     };
 
     const vector<Rect> DrawHandler::areas = {
         {2, 2, 47, 37},
         {51, 2, 46, 18},
         {55, 21, 45, 23},
-        {2, 2, 97, 39}
+        {2, 2, CONSOLE_WIDTH - 3, 39}
     };
 
     const string DrawHandler::quitEditor = "Press 'q' to quit text viewer";

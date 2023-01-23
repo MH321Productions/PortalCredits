@@ -4,9 +4,20 @@
 #include <vector>
 #include <string>
 
+#ifdef PC_WINDOWS
+#define CONSOLE_WIDTH 101
+#else
+#define CONSOLE_WIDTH 100
+#endif
+#define CONSOLE_HEIGHT 41
+
+#define COLOR_BLACK 0, 0, 0
+#define COLOR_YELLOW 219, 164, 10
+
 namespace PortalCredits {
     enum class PortalSymbols: unsigned char;
     class ConsoleHandler;
+    struct LicenseInfo;
 
     struct Rect {
         int x, y;
