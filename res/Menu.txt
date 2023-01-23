@@ -1,10 +1,23 @@
-//Title menu with temporary positions
-20 20 5 Run
-20 22 6 Run with modern outlines
-20 24 1 About
-20 26 7 Quit
+40 22 5 Run
+40 25 6 Run with modern outlines
+40 28 1 About
+40 31 7 Quit
 #
-13 32 2 Warranty
-26 32 3 Redistributing conditions
-56 32 4 License
-68 32 0 Back to main menu
+13 38 2 Warranty
+26 38 3 Redistributing conditions
+56 38 4 License
+68 38 0 Back to main menu
+#
+            PortalCredits  Copyright (C) 2022-2023  321Productions
+ 
+This program comes with ABSOLUTELY NO WARRANTY; for details select 'Warranty'.
+This is free software, and you are welcome to redistribute it
+under certain conditions; select 'Redistributing conditions' for details.
+ 
+ 
+PortalCredits is a small tribute to the PORTAL game series by Valve,
+created by a bored university student in his free time.
+It recreates the end credits of the first PORTAL game with the Song
+"Still Alive" by Jonathan Coulton.
+ 
+Note: I don't own the song or its lyrics, Valve does.
