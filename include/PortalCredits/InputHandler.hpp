@@ -17,7 +17,8 @@ namespace PortalCredits {
         ArrowDown,
         ArrowUp,
         Enter = '\r',
-        Space = ' '
+        Space = ' ',
+        Quit = 'q'
     };
 
     /**
