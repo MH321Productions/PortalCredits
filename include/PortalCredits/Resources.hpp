@@ -142,6 +142,11 @@ namespace PortalCredits {
             static const std::vector<std::string> titleAbout;
 
             /**
+             * This vector contains the about screen text
+            */
+            static const std::vector<std::string> textAbout;
+
+            /**
              * This vector contains the menu entries for the main menu
             */
             static const std::vector<MenuInfo> menuMain;

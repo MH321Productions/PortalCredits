@@ -399,6 +399,7 @@ def generateMenuFile(logPrefix: str = ""):
     newMode = 0
     text = ""
     lineIndex = -1
+    readMode = 0 #0: Main, 1: About, 2: Text about
 
     for line in fileIn:
         lineIndex += 1
@@ -407,24 +408,34 @@ def generateMenuFile(logPrefix: str = ""):
 
         if line.startswith('#'):
             fileOut.write("    };\n\n")
-            fileOut.write("    const std::vector<MenuInfo> Resources::menuAbout = {\n")
+
+            readMode += 1
+
+            if readMode == 1:
+                fileOut.write("    const std::vector<MenuInfo> Resources::menuAbout = {\n")
+            else:
+                fileOut.write("    const std::vector<std::string> Resources::textAbout = {\n")
             continue
 
-        comps = line.replace("\n", "").split()
-        if len(comps) < 4:
-            print(logPrefix, f"The value in line {lineIndex} has less than 6 components: \"{line}\"", file=sys.stderr)
-            continue
+        if readMode < 2:
+            comps = line.replace("\n", "").split()
+            if len(comps) < 4:
+                print(logPrefix, f"The value in line {lineIndex} has less than 6 components: \"{line}\"", file=sys.stderr)
+                continue
 
-        x = int(comps[0])
-        y = int(comps[1])
-        newMode = int(comps[2])
-        text = ""
-        for i in range(3, len(comps)):
-            text += comps[i]
-            text += ' '
-        text = text.strip()
+            x = int(comps[0])
+            y = int(comps[1])
+            newMode = int(comps[2])
+            text = ""
+            for i in range(3, len(comps)):
+                text += comps[i]
+                text += ' '
+            text = text.strip()
 
-        fileOut.write(f"        {{{x}, {y}, \"{text}\", {appModes[newMode]}}},\n")
+            fileOut.write(f"        {{{x}, {y}, \"{text}\", {appModes[newMode]}}},\n")
+        else:
+            text = line.replace("\n", "").replace("\"", "\\\"")
+            fileOut.write(f"        \"{text}\",\n")
     
     #Vector end
     print(logPrefix, "Writing footer")
