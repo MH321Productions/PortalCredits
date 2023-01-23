@@ -73,6 +73,13 @@ namespace PortalCredits {
             void drawText(DrawArea area, const std::vector<std::string>& text, const size_t& stringIndex, const size_t& stringPosition);
 
             /**
+             * Draw the license text
+             * @param info The license info
+             * @param stringIndex The index of the starting line
+            */
+            void drawLicenseText(const LicenseInfo& info, const size_t& stringIndex);
+
+            /**
              * Queries the draw mode
              * @return Whether the outlines are drawn in a modern way
             */
@@ -100,6 +107,7 @@ namespace PortalCredits {
             static const std::vector<Rect> outlineMain;
             static const std::vector<Rect> outlineMenu;
             static const std::vector<Rect> areas;
+            static const std::string quitEditor;
 
             ConsoleHandler& console;
             bool drawModern;

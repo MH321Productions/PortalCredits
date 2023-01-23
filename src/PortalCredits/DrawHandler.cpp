@@ -1,4 +1,5 @@
 #include <iostream>
+#include <sstream>
 
 #include "PortalCredits/DrawHandler.hpp"
 #include "PortalCredits/ConsoleHandler.hpp"
@@ -23,6 +24,8 @@ namespace PortalCredits {
         {55, 21, 45, 23},
         {2, 2, 97, 39}
     };
+
+    const string DrawHandler::quitEditor = "Press 'q' to quit text viewer";
 
     void DrawHandler::init() {
         console.init();
@@ -131,8 +134,37 @@ namespace PortalCredits {
             }
 
         console.moveCursor(r.x, drawPos);
-        //Only draw text if it is non-empty
-        if (text.at(stringIndex).size()) for (int i = 0; i <= stringPosition; i++) console << text.at(stringIndex).at(i);
+        //Only draw text if it is non-empty the index is non-zero
+        if (text.at(stringIndex).size() && stringPosition) for (int i = 0; i <= stringPosition; i++) console << text.at(stringIndex).at(i);
+    }
+
+    void DrawHandler::drawLicenseText(const LicenseInfo& info, const size_t& stringIndex) {
+        const Rect& r = areas.at((int) DrawArea::Menu);
+
+        int textHeight = r.height - 1;
+        int numLines = info.text.size() < textHeight ? info.text.size() : textHeight;
+        int bottomPos = r.y + textHeight;
+
+        //Draw normal text
+        for (int i = 0; i < numLines; i++) {
+            console.moveCursor(r.x, r.y + i).write(info.text.at(stringIndex + i));
+        }
+
+        //Draw status line
+        console.moveCursor(r.x, bottomPos);
+        console.setBackgroundColor(COLOR_YELLOW).setForegroundColor(COLOR_BLACK).hline(r.width);
+        
+        console.moveCursor(r.x + 1, bottomPos).write(info.title);
+
+        ostringstream str;
+        str << "Lines: " << (stringIndex + 1) << '-' << (stringIndex + numLines) << '/' << info.text.size();
+        string lines = str.str();
+        int linePos = (r.width / 2) - (lines.size() / 2);
+        console.moveCursor(r.x + linePos, bottomPos).write(lines);
+
+        console.moveCursor(r.x + r.width - quitEditor.size() - 1, bottomPos).write(quitEditor);
+
+        console.setBackgroundColor(COLOR_BLACK).setForegroundColor(COLOR_YELLOW);
     }
 
     void DrawHandler::clearArea(const Rect& area) {
