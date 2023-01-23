@@ -102,6 +102,13 @@ namespace PortalCredits {
              * @param area The area to clear
             */
             void clearArea(const Rect& area);
+
+            /**
+             * Queries the drawable area
+             * @param area The DrawArea to query from
+             * @return A rect describing the drawable area
+            */
+            static Rect getArea(DrawArea area) {return areas.at((int) area);};
         
         private:
             static const std::vector<Rect> outlineMain;
