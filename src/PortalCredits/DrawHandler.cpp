@@ -98,7 +98,7 @@ namespace PortalCredits {
     }
 
     void DrawHandler::drawText(DrawArea area, const vector<string>& text, const size_t& stringIndex, const size_t& stringPosition) {
-        if (area == DrawArea::Logo) return; //Logo does nothing
+        if (area == DrawArea::Logo || area == DrawArea::Menu) return; //Logo does nothing, menu has its own method
 
         const Rect& r = areas.at((int) area);
         int startY, startIndex, numLines, drawPos;
