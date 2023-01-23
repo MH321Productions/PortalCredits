@@ -112,6 +112,12 @@ namespace PortalCredits {
             ConsoleHandler& write(const std::string& text);
 
             /**
+             * Clear a horizontal line, i.e. fill it with spaces
+             * @param width The width of the line
+            */
+            ConsoleHandler& hline(const size_t& width);
+
+            /**
              * Updates the cursor visibility
              * @param showCursor Whether to show the cursor
              * @return a reference to the handler

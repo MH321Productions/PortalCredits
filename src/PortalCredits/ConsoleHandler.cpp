@@ -82,6 +82,12 @@ namespace PortalCredits {
         return *this;
     }
 
+    ConsoleHandler& ConsoleHandler::hline(const size_t& width) {
+        cout << "\033[" << width << 'X';
+
+        return *this;
+    }
+
     ConsoleHandler& ConsoleHandler::setCursorVisibility(const bool& showCursor) {
         //ESC[?25h -> Show cursor
         //ESC[?25l -> Hide cursor
