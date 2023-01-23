@@ -21,8 +21,8 @@ namespace PortalCredits {
          * (Can be used for multiple timings within a line)
         */
         size_t startPos, endPos;
-        //The start and end time of the text
-        double startTime, endTime;
+        //The start/end time and duration of the text
+        double startTime, endTime, duration;
     };
 
     /**
