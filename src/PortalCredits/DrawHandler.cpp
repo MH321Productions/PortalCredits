@@ -30,9 +30,15 @@ namespace PortalCredits {
     void DrawHandler::init() {
         console.init();
         console.setTitle("PortalCredits");
-        console.resize(100, 41);
-        console.setBackgroundColor(0, 0, 0, true);
-        console.setForegroundColor(219, 164, 10);
+        console.resize(CONSOLE_WIDTH, CONSOLE_HEIGHT);
+
+        #ifndef PC_WINDOWS
+        //Make the whole window background black
+        cout << "\033]11;#000000\033\\";
+        #endif
+
+        console.setBackgroundColor(COLOR_BLACK, true);
+        console.setForegroundColor(COLOR_YELLOW);
     }
 
     void DrawHandler::drawOutlines(const bool& drawMenu) {
