@@ -217,6 +217,7 @@ def generateTimingFile(musicStart: float, logPrefix: str = ""):
     endPos = 0
     startTime = 0.0
     endTime = 0.0
+    duration = 0.0
     text = ""
 
     for line in fileIn:
@@ -246,6 +247,7 @@ def generateTimingFile(musicStart: float, logPrefix: str = ""):
         endPos = int(comps[3])
         startTime = float(comps[4])
         endTime = float(comps[5])
+        duration = endTime - startTime
 
         #Determine text
         if readMode == 0:
@@ -262,7 +264,7 @@ def generateTimingFile(musicStart: float, logPrefix: str = ""):
             text = text[startPos:endPos + 1:1]
 
         #Write entry
-        fileOut.write(f"        {{{pageIndex}, {stringIndex}, {startPos}, {endPos}, {startTime}, {endTime}}}, //\"{text}\"\n")
+        fileOut.write(f"        {{{pageIndex}, {stringIndex}, {startPos}, {endPos}, {startTime}, {endTime}, {duration}}}, //\"{text}\"\n")
     
     #Credits end
     print(logPrefix, "Writing footer")
