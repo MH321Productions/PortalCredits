@@ -30,6 +30,11 @@ licenseNames = [
     "conditions",
     "warranty"
 ]
+licenseTitles = [
+    "GNU GPLv3 License",
+    "GPLv3 - Redistribution Conditions",
+    "GPLv3 - Warranty"
+]
 titleFiles = [
     "../../res/Title.txt",
     "../../res/About.txt"
@@ -272,6 +277,7 @@ def generateTimingFile(musicStart: float, logPrefix: str = ""):
 def generateLicenseFile(logPrefix: str = ""):
     global licenseNames
     global licenseFiles
+    global licenseTitles
 
     print(logPrefix, "Opening file License.cpp")
 
@@ -292,15 +298,18 @@ def generateLicenseFile(logPrefix: str = ""):
     for i in range(len(licenseFiles)):
         fileIn = open(licenseFiles[i], 'r')
 
-        #Vector start
-        fileOut.write(f"    const std::vector<std::string> Resources::{licenseNames[i]} = {{\n")
+        #Struct start
+        fileOut.write(f"    const LicenseInfo Resources::{licenseNames[i]} = {{\n")
+        fileOut.write(f"        \"{licenseTitles[i]}\",\n")
+        fileOut.write("        {\n")
 
         #Data
         for line in fileIn:
             temp = str(line).replace("\n", "").replace("\\", "\\\\").replace("\"", "\\\"")
-            fileOut.write(f"        \"{temp}\",\n")
+            fileOut.write(f"            \"{temp}\",\n")
         
-        #Vector end
+        #Struct end
+        fileOut.write("        }\n")
         fileOut.write("    };\n\n")
         fileIn.close()
     
