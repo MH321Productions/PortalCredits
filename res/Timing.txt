@@ -130,6 +130,7 @@
 
 #Logos
 
+0 0 0 0 23.918 23.919 //Dummy to trigger transition at the right time
 0 0 0 0 23.919 36.179
 1 0 0 0 36.18 38.458
 0 0 0 0 38.459 46.439
