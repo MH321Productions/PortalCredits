@@ -45,6 +45,15 @@ namespace PortalCredits {
     };
 
     /**
+     * This struct contains the text and
+     * title for the license and its parts
+    */
+    struct LicenseInfo {
+        std::string title;
+        std::vector<std::string> text;
+    };
+
+    /**
      * This enum contains all ASCII art symbols
      * that are drawn in the bottom right corner
     */
@@ -108,17 +117,17 @@ namespace PortalCredits {
             /**
              * This vector contains the GNU GPLv3 License text, splitted in lines
             */
-            static const std::vector<std::string> license;
+            static const LicenseInfo license;
 
             /**
              * This vector contains the sections 15 and 16 of the GPL (warranty and liability)
             */
-            static const std::vector<std::string> warranty;
+            static const LicenseInfo warranty;
 
             /**
              * This vector contains the sections 4 to 6 of the GPL (redistributing conditions)
             */
-            static const std::vector<std::string> conditions;
+            static const LicenseInfo conditions;
 
             /**
              * This vector contains the title screen text
