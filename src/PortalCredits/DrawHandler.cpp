@@ -170,7 +170,7 @@ namespace PortalCredits {
     void DrawHandler::clearArea(const Rect& area) {
         for (int i = 0; i < area.height; i++) {
             console.moveCursor(area.x, area.y + i);
-            cout << "\033[" << area.width << 'X';
+            console.hline(area.width);
         }
     }
 }
