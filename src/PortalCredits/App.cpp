@@ -4,7 +4,6 @@
 #include "PortalCredits/Resources.hpp"
 
 using namespace std;
-using namespace std::chrono;
 
 namespace PortalCredits {
 
@@ -58,6 +57,11 @@ namespace PortalCredits {
 
         input.start();
 
+        textHeight = DrawHandler::getArea(DrawArea::Menu).height - 1;
+        textLicenseMaxPos = max((int) Resources::license.text.size() - textHeight, 0);
+        textWarrantyMaxPos = max((int) Resources::warranty.text.size() - textHeight, 0);
+        textConditionsMaxPos = max((int) Resources::conditions.text.size() - textHeight, 0);
+
         return true;
     }
 
@@ -68,10 +72,8 @@ namespace PortalCredits {
         for (const int& i: data) {
             //Only add relevant inputs to events
             switch (i) {
-                case -1: //EOF (caused by CTRL + Z (on Windows)) -> Quit
-                case 3: //Ctrl + C -> Quit
-                case 'q': //Quit
-                case 'Q': //Quit
+                case -1: //EOF (caused by CTRL + Z (on Windows)) -> Quit directly
+                case 3: //Ctrl + C -> Quit directly
                     quit();
                     break;
                 
@@ -81,6 +83,7 @@ namespace PortalCredits {
                 case ArrowRight:
                 case Space: //Space bar: Play/Pause
                 case Enter: //Enter key pressed (No newline conversion)
+                case Quit: //q key pressed -> Quit event
                     events.push_back(i);
                     break;
             }
@@ -101,6 +104,7 @@ namespace PortalCredits {
                 break;
             
             case AppMode::MainProgram:
+            case AppMode::MainProgramModern:
                 dirty = loopMainProgram();
                 break;
         }
@@ -122,6 +126,7 @@ namespace PortalCredits {
                 break;
             
             case AppMode::MainProgram:
+            case AppMode::MainProgramModern:
                 renderMainProgram();
                 break;
         }
@@ -134,6 +139,8 @@ namespace PortalCredits {
     void PortalCreditsApp::onCleanup() {
         input.stop();
         sound.stop();
+        console.setCursorVisibility(true);
+        console.setCursorType(CursorType::Default);
         console.close();
     }
 

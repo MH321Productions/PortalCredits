@@ -12,6 +12,36 @@
 
 namespace PortalCredits {
 
+    struct TimeInfo;
+
+    /**
+     * This struct contains the information
+     * for the currently used timings during
+     * the main program modes:
+     * 
+     * The lyrics/credits/logo fields are pointers
+     * to the current time infos
+     * The index fields hold the index of the time info
+     * within its resource vector
+     * The pos fields hold the index of the current
+     * character within the time info's text
+     * The clear fields indicate when the corresponding
+     * drawing area should be cleared
+    */
+    struct CurrentTimeInfo {
+        const TimeInfo* lyrics;
+        size_t lyricsIndex, lyricsPos;
+        bool lyricsClear;
+
+        const TimeInfo* credits;
+        size_t creditsIndex, creditsPos;
+        bool creditsClear;
+        
+        const TimeInfo* logo;
+        size_t logoIndex;
+        bool logoClear;
+    };
+
     /**
      * This enum contains the different modes
      * the app can have
@@ -41,9 +71,9 @@ namespace PortalCredits {
              * Create the app, along with its handlers
             */
             PortalCreditsApp()
-            : console(), draw(console, true), sound(), exitCode(0), time(0.0),
+            : console(), draw(console, true), sound(), exitCode(0), mainTime(0.0), mainTimeAdd(0.0),
               running(false), mode(AppMode::MainMenu), dirty(false), stateChanged(true),
-              menuMainPos(0), menuAboutPos(0) {}
+              menuMainPos(0), menuAboutPos(0), textPos(0), mainIsRunning(false), mainIsMusicStarted(false) {}
 
             /**
              * Execute the app, e.g. running the main loop
@@ -64,17 +94,27 @@ namespace PortalCredits {
             AppMode mode;
             InputHandler input;
             int exitCode;
-            double time;
             bool running;
             bool dirty;
             bool stateChanged;
-            std::chrono::time_point<std::chrono::system_clock> start, end;
             std::vector<int> events;
             std::optional<AppMode> pendingStateChange;
+
+            //Main program variables
+            std::chrono::time_point<std::chrono::system_clock> start, end;
+            std::chrono::duration<double> dur;
+            double mainTime, mainTimeAdd;
+            bool mainIsRunning, mainIsMusicStarted;
+            CurrentTimeInfo mainInfo;
 
             //Menu variables
             int menuMainPos;
             int menuAboutPos;
+
+            //Text variables
+            int textHeight;
+            int textLicenseMaxPos, textWarrantyMaxPos, textConditionsMaxPos;
+            int textPos;
 
             /**
              * Init everything
