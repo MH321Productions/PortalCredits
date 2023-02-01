@@ -260,6 +260,8 @@ def generateTimingFile(musicStart: float, logPrefix: str = ""):
         
         if endPos == -1:
             endPos = len(text) - 1
+            if endPos == -1:
+                endPos = 0
         
         if readMode != 2:
             text = text[startPos:endPos + 1:1]
