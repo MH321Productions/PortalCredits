@@ -1,6 +1,7 @@
 #include <iostream>
 #include <algorithm>
 #include <cmath>
+#include <cstring>
 
 #include "PortalCredits/App.hpp"
 #include "PortalCredits/Resources.hpp"
@@ -97,6 +98,7 @@ namespace PortalCredits {
             mainIsRunning = true;
 
             //Init timings
+            memset(&mainInfo, 0, sizeof(CurrentTimeInfo));
             mainInfo.lyrics = Resources::timingLyrics.size() ? Resources::timingLyrics.data() : NULL;
             mainInfo.credits = Resources::timingCredits.size() ? Resources::timingCredits.data() : NULL;
             mainInfo.logo = Resources::timingLogos.size() ? Resources::timingLogos.data() : NULL;
