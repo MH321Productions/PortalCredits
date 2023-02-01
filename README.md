@@ -4,7 +4,7 @@ A console application displaying the end credits of Portal.
 
 This is a fan project by a bored university student.
 
-![Start of the Credits](doc/Start.gif "The start of the animation")
+![Start of the Credits](doc/Start.mp4 "The start of the animation")
 
 PortalCredits works on Windows and Linux (Tested on Ubuntu 22.10) through
 xterm virtual terminal sequences and Winapi calls.
