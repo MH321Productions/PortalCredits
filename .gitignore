@@ -35,6 +35,7 @@
 bin/
 .vscode/
 doc/internal/
+build/
 
 # Generated Headers
 src/Generated/
