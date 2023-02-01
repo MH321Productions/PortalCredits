@@ -45,6 +45,7 @@ add_library(PortalResources STATIC
     src/Generated/License.cpp
     src/Generated/Title.cpp
     src/Generated/Menu.cpp
+    src/Generated/Symbols.cpp
 )
 
 add_library(PortalCredits STATIC
@@ -53,7 +54,6 @@ add_library(PortalCredits STATIC
     src/PortalCredits/RenderHandlers.cpp
     src/PortalCredits/InputHandler.cpp
     src/PortalCredits/SoundHandler.cpp
-    src/PortalCredits/Symbols.cpp
     src/PortalCredits/SystemHandler.cpp
     src/PortalCredits/ConsoleHandler.cpp
     src/PortalCredits/DrawHandler.cpp
