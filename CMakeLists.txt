@@ -7,12 +7,16 @@ include_directories(lib)
 include_directories(include)
 include_directories(src/Generated)
 
-if (WIN32)
+if (NOT DEFINED CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release)
-    set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded")
+endif()
+
+if (WIN32)
+    if(MSVC)
+        set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded")
+    endif()
+
     add_compile_definitions(PC_WINDOWS)
-else()
-    #set(CMAKE_CXX_FLAGS -no-pie)
 endif()
 
 #Subdirectories
@@ -68,6 +72,6 @@ add_executable(Program src/Main.cpp)
 set_target_properties(Program PROPERTIES OUTPUT_NAME "PortalCredits")
 target_link_libraries(Program PRIVATE ${libs})
 
-if (WIN32)
+if (MSVC)
     set_target_properties(${libs} PROPERTIES MSVC_RUNTIME_LIBRARY "MultiThreaded")
 endif()
