@@ -20,4 +20,6 @@ created by a bored university student in his free time.
 It recreates the end credits of the first PORTAL game with the Song
 "Still Alive" by Jonathan Coulton.
  
-Note: I don't own the song or its lyrics, Valve does.
+ 
+                I don't own the song, its lyrics,
+                the credits or the symbols, Valve does.
