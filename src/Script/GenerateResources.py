@@ -118,8 +118,9 @@ def writeCredits(fileOut):
     fileIn = open("../../res/Credits.txt", 'r')
 
     for line in fileIn:
-        temp = str(line).replace("\n", "").replace("\\", "\\\\")
+        temp = str(line).replace("\n", "")
         readCredits.append(temp)
+        temp = temp.replace("\\", "\\\\")
         fileOut.write(f"        \"{temp}\",\n")
     
     fileOut.write("    };\n\n")
