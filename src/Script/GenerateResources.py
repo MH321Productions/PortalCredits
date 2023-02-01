@@ -73,7 +73,7 @@ def hexdumpSong(filepath: str, logPrefix: str = ""):
     print(f"{logPrefix} The song file \"{os.path.basename(filepath)}\" is {size} ({hex(size)}) bytes big")
 
     print(logPrefix, "Opening file Song.cpp")
-    file = open("../Generated/Song.cpp", "w")
+    file = open("../Generated/Song.cpp", "w", encoding="utf-8")
     read = open(filepath, 'rb')
 
     print(logPrefix, "Writing header")
@@ -115,7 +115,7 @@ def writeCredits(fileOut):
     global readCredits
     fileOut.write("    const std::vector<std::string> Resources::credits = {\n")
 
-    fileIn = open("../../res/Credits.txt", 'r')
+    fileIn = open("../../res/Credits.txt", 'r', encoding="utf-8")
 
     for line in fileIn:
         temp = str(line).replace("\n", "")
@@ -131,7 +131,7 @@ def writeLyrics(fileOut):
     fileOut.write("    const std::vector<std::vector<std::string>> Resources::lyrics = {\n")
     fileOut.write("        {\n")
 
-    fileIn = open("../../res/Lyrics.txt", 'r')
+    fileIn = open("../../res/Lyrics.txt", 'r', encoding="utf-8")
     tempArray = []
 
     for line in fileIn:
@@ -154,7 +154,7 @@ def writeLyrics(fileOut):
 def generateLyricsHeader(logPrefix: str = ""):
     print(logPrefix, "Opening file Lyrics.cpp")
 
-    file = open("../Generated/Lyrics.cpp", 'w')
+    file = open("../Generated/Lyrics.cpp", 'w', encoding="utf-8")
 
     #Write comment
     print(logPrefix, "Writing header")
@@ -187,7 +187,7 @@ def generateTimingFile(musicStart: float, logPrefix: str = ""):
 
     print(logPrefix, "Opening file Timings.cpp")
 
-    fileOut = open("../Generated/Timing.cpp", 'w')
+    fileOut = open("../Generated/Timing.cpp", 'w', encoding="utf-8")
 
     #Write comment
     print(logPrefix, "Writing header")
@@ -207,7 +207,7 @@ def generateTimingFile(musicStart: float, logPrefix: str = ""):
 
     #Write lyrics
     print(logPrefix, "Writing contents")
-    fileIn = open("../../res/Timing.txt", 'r')
+    fileIn = open("../../res/Timing.txt", 'r', encoding="utf-8")
     readMode = 0 #Lyrics
     comps = []
     lineIndex = 0
@@ -286,7 +286,7 @@ def generateLicenseFile(logPrefix: str = ""):
 
     print(logPrefix, "Opening file License.cpp")
 
-    fileOut = open("../Generated/License.cpp", 'w')
+    fileOut = open("../Generated/License.cpp", 'w', encoding="utf-8")
 
     #Write comment
     print(logPrefix, "Writing header")
@@ -301,7 +301,7 @@ def generateLicenseFile(logPrefix: str = ""):
     #Write contents
     print(logPrefix, "Writing contents")
     for i in range(len(licenseFiles)):
-        fileIn = open(licenseFiles[i], 'r')
+        fileIn = open(licenseFiles[i], 'r', encoding="utf-8")
 
         #Struct start
         fileOut.write(f"    const LicenseInfo Resources::{licenseNames[i]} = {{\n")
@@ -331,7 +331,7 @@ def generateTitleFile(logPrefix: str = ""):
 
     print(logPrefix, "Opening file Title.cpp")
 
-    fileOut = open("../Generated/Title.cpp", 'w')
+    fileOut = open("../Generated/Title.cpp", 'w', encoding="utf-8")
 
     #Write comment
     print(logPrefix, "Writing header")
@@ -346,7 +346,7 @@ def generateTitleFile(logPrefix: str = ""):
     #Write contents
     print(logPrefix, "Writing contents")
     for i in range(len(titleFiles)):
-        fileIn = open(titleFiles[i], 'r')
+        fileIn = open(titleFiles[i], 'r', encoding="utf-8")
 
         #Data
         rawString = []
@@ -389,7 +389,7 @@ def generateMenuFile(logPrefix: str = ""):
 
     print(logPrefix, "Opening file Menu.cpp")
 
-    fileOut = open("../Generated/Menu.cpp", 'w')
+    fileOut = open("../Generated/Menu.cpp", 'w', encoding="utf-8")
 
     #Write comment
     print(logPrefix, "Writing header")
@@ -406,7 +406,7 @@ def generateMenuFile(logPrefix: str = ""):
     print(logPrefix, "Writing contents")
     fileOut.write("    const std::vector<MenuInfo> Resources::menuMain = {\n")
 
-    fileIn = open("../../res/Menu.txt", 'r')
+    fileIn = open("../../res/Menu.txt", 'r', encoding="utf-8")
     comps = []
     x = 0
     y = 0
