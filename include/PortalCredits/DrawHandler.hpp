@@ -5,9 +5,11 @@
 #include <string>
 
 #ifdef PC_WINDOWS
-#define CONSOLE_WIDTH 101
+#define CONSOLE_WIDTH 102
+#define MENU_AREA_SUBTRACT 5
 #else
 #define CONSOLE_WIDTH 100
+#define MENU_AREA_SUBTRACT 3
 #endif
 #define CONSOLE_HEIGHT 41
 

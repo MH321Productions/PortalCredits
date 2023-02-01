@@ -22,7 +22,7 @@ namespace PortalCredits {
         {2, 2, 47, 37},
         {51, 2, 46, 18},
         {55, 21, 45, 23},
-        {2, 2, CONSOLE_WIDTH - 3, 39}
+        {2, 2, CONSOLE_WIDTH - MENU_AREA_SUBTRACT, 39}
     };
 
     const string DrawHandler::quitEditor = "Press 'q' to quit text viewer";
