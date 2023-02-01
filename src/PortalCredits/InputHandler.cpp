@@ -4,6 +4,8 @@
 
 using namespace std;
 
+static const int IgnoreEvent = -6;
+
 namespace PortalCredits {
 
     void InputHandler::start() {
@@ -37,6 +39,27 @@ namespace PortalCredits {
     }
 
     void InputHandler::readThread() {
+        #ifdef PC_WINDOWS
+        hIn = GetStdHandle(STD_INPUT_HANDLE);
+        unsigned long numRead;
+        int i;
+
+        while (running) {
+            ReadConsoleInput(hIn, events.data(), events.size(), &numRead);
+
+            for (int j = 0; j < numRead; j++) {
+                if (events.at(j).EventType == KEY_EVENT) i = processKeyEvent(events.at(j).Event.KeyEvent);
+                else if (events.at(j).EventType == MOUSE_EVENT) i = processMouseEvent(events.at(j).Event.MouseEvent);
+                else i = IgnoreEvent;
+
+                if (i == IgnoreEvent) continue;
+
+                m.lock(); //Lock mutex
+                data.push_back(i); //Add data
+                m.unlock();
+            }
+        }
+        #else
         while (running) {
             int i = cin.get(); //Read char (blocking)
 
@@ -73,6 +96,37 @@ namespace PortalCredits {
             data.push_back(i); //Add data
             m.unlock();
         }
+        #endif
     }
 
+    #ifdef PC_WINDOWS
+    int InputHandler::processKeyEvent(const KEY_EVENT_RECORD& record) {
+        if (!record.bKeyDown) return IgnoreEvent;
+
+        switch (record.wVirtualKeyCode) {
+            case VK_UP:
+                return ArrowUp;
+            case VK_DOWN:
+                return ArrowDown;
+            case VK_LEFT:
+                return ArrowLeft;
+            case VK_RIGHT:
+                return ArrowRight;
+            case VK_RETURN:
+                return Enter;
+            default:
+                return record.uChar.AsciiChar;
+        }
+    }
+
+    int InputHandler::processMouseEvent(const MOUSE_EVENT_RECORD& record) {
+        if (record.dwEventFlags == MOUSE_WHEELED) {
+            int scroll = record.dwButtonState & 0xFFFF0000;
+            if (scroll > 0) return ArrowUp;
+            else if (scroll < 0) return ArrowDown;
+        }
+        return IgnoreEvent;
+    }
+
+    #endif
 }

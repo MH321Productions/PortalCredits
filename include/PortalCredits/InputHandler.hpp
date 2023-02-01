@@ -5,6 +5,11 @@
 #include <mutex>
 #include <vector>
 
+#ifdef PC_WINDOWS
+#include <array>
+#include "PortalCredits/WinInclude.hpp"
+#endif
+
 namespace PortalCredits {
 
     /**
@@ -57,6 +62,14 @@ namespace PortalCredits {
             std::thread t;
             bool running;
             bool hasEsc, hasCsi;
+
+            #ifdef PC_WINDOWS
+            HANDLE hIn;
+            std::array<INPUT_RECORD, 128> events;
+
+            int processKeyEvent(const KEY_EVENT_RECORD& record);
+            int processMouseEvent(const MOUSE_EVENT_RECORD& record);
+            #endif
 
             void readThread();
     };
