@@ -22,6 +22,7 @@ set(SFML_BUILD_GRAPHICS OFF)
 set(SFML_BUILD_WINDOW OFF)
 set(SFML_BUILD_NETWORK OFF)
 set(SFML_USE_STATIC_STD_LIBS ON)
+add_compile_definitions(SFML_STATIC)
 add_subdirectory(lib/SFML)
 include_directories(lib/SFML/include)
 
@@ -56,6 +57,7 @@ add_library(PortalCredits STATIC
 target_link_libraries(PortalCredits PRIVATE sfml-audio)
 
 list(APPEND libs
+    sfml-system
     sfml-audio
     PortalCredits
     PortalResources
